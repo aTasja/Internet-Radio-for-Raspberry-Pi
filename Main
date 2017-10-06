@@ -1,0 +1,40 @@
+from twython import TwythonStreamer
+import webbrowser as wb
+import os, signal
+import time
+
+def kill_process():
+    os.system('pkill chromium')
+
+CK = ''
+CS = ''
+AT = ''
+AS = ''
+CLOSE = False
+            
+class MyStreamer(TwythonStreamer):
+    def on_success(self, data):
+        global CLOSE
+        if CLOSE == True:
+            kill_process()
+         
+        if 'text' in data:
+            if '1' in data['text']:
+                wb.open('https://listen1.myradio24.com/6262', new = 0)
+                print ('got {}'.format(data['text']))
+                CLOSE = True
+            elif '2' in data['text']:
+                wb.open('https://icecast-vgtrk.cdnvideo.ru/mayakfm_aac_64kbps', new = 0)
+                print ('got {}'.format(data['text']))
+                CLOSE = True
+            elif '3' in data['text']:
+                wb.open('https://player.nashe.ru/spb/?play', new = 0)
+                print ('got {}'.format(data['text']))
+                CLOSE = True
+                    
+                
+    def on_error(self, status_code, data):
+        print (status_code)
+
+stream = MyStreamer(CK, CS, AT, AS)
+stream.statuses.filter(track = 'R@dio')
