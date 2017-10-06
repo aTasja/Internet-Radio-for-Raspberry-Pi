@@ -1,5 +1,5 @@
 # Internet-Radio-for-Raspberry-Pi
-Equipment: Raspberry Pi 3 B
+Equipment: Raspberry Pi 3 and
            TV for sound
            
 Behavor:
