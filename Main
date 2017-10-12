@@ -24,7 +24,7 @@
 
 
 from twython import TwythonStreamer
-import os, signal
+import os
 import time
 import RPi.GPIO as GPIO
 
@@ -44,21 +44,16 @@ def kill_process():
     os.system('mpc clear')
     os.system('amixer cset numid=3 2') #switch the audio output to HDMI
   
-def leds_on(pins):
-    ''' Set all LEDs as output. Come all LEDs on for 'system ready'. '''
+def leds_mode(pins, mode):
+    ''' Set all LEDs as output. Come all LEDs on/off. '''
     GPIO.setmode(GPIO.BOARD)
     for pin in pins:
         GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, True)
-        
-def leds_off(pins):
-    ''' Come all LEDs off. Invoke when command for mode is received. '''
-    GPIO.setmode(GPIO.BOARD)
-    for pin in pins:
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, False)
+        GPIO.output(pin, mode)
         
 def blink(pin):
+    global LED_PINS
+    leds_mode(LED_PINS, False)
     for i in range(5):
         GPIO.output(pin, True)
         time.sleep(0.2)
@@ -73,7 +68,7 @@ def button_setup(butt_pins):
 def radio_set(station):
     ''' Switch on the appropriate LED and start radio playing. '''
     global LED_PINS
-    leds_off(LED_PINS)    
+    leds_mode(LED_PINS, False)    
     GPIO.setmode(GPIO.BOARD)
     GPIO.output(LED_PINS[station-1], True)
     print ('radio {} is playing'.format(station))
@@ -136,7 +131,7 @@ if __name__ == '__main__':
     
     try:  # program starts here
         radio_playlist()
-        leds_on(LED_PINS)
+        leds_mode(LED_PINS, True)
         button_setup(BUTT_PINS)
         
         # choose mode button/twitter
@@ -146,7 +141,6 @@ if __name__ == '__main__':
             if GPIO.input(33) == False:
                 # control buttons
                 print ('=== Button control choosed ===')
-                leds_off(LED_PINS) 
                 blink(36)           # LED #1 blinks 5 times
                 
                 button_mode(BUTT_PINS)
@@ -155,7 +149,6 @@ if __name__ == '__main__':
             elif GPIO.input(35) == False:               
                 # coltrol tweets
                 print ('=== Twitter control choosed ===')
-                leds_off(LED_PINS) 
                 blink(38)           # LED #2 blinks 5 times
                 
                 stream = MyStreamer(CK, CS, AT, AS)
