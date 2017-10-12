@@ -7,6 +7,11 @@ Equipment: Raspberry Pi 3 and
            Breadboard
            Wires
            
+Software requirements:
+           >>sudo apt-get update
+           install the Music Player Daemon(mpd) and its client mpc
+           >>sudo apt-get install mpc mpd
+           
 Behavor:
   After launching, three LEDs switching on.
   User should press button #1 or button #2 to choose button mode or tweet mode to control radio. After pressing all LEDs swithes off, than the appropriate LED blinks 5 times. 
