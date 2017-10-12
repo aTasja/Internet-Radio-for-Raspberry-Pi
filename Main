@@ -31,7 +31,7 @@ import RPi.GPIO as GPIO
 def radio_playlist():
     os.system('amixer cset numid=3 1') #switch the audio output to analogue (headphone jack)
     
-    # fill radio playlist
+    # fill Music Player Daemon playlist
     os.system('mpc add https://listen1.myradio24.com/6262') # radio 1
     os.system('mpc add https://icecast-vgtrk.cdnvideo.ru/mayakfm_aac_64kbps') # radio 2
     os.system('mpc add http://nashe1.hostingradio.ru/nashespb128.mp3') # radio 3
@@ -39,7 +39,7 @@ def radio_playlist():
     os.system('mpc volume 100') # set volume 100%
 
 def kill_process():
-    ''' Delete all processes, clear GPIO'''
+    ''' Delete all processes, clear GPIO, Music Player Daemon playlist'''
     GPIO.cleanup()
     os.system('mpc clear')
     os.system('amixer cset numid=3 2') #switch the audio output to HDMI
@@ -52,11 +52,18 @@ def leds_on(pins):
         GPIO.output(pin, True)
         
 def leds_off(pins):
-    ''' Come all LEDs off. Invoke when command for station is received. '''
+    ''' Come all LEDs off. Invoke when command for mode is received. '''
     GPIO.setmode(GPIO.BOARD)
     for pin in pins:
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, False)
+        
+def blink(pin):
+    for i in range(5):
+        GPIO.output(pin, True)
+        time.sleep(0.2)
+        GPIO.output(pin, False)
+        time.sleep(0.2)
         
 def button_setup(butt_pins):
     ''' Set buttons as input. '''
@@ -64,7 +71,7 @@ def button_setup(butt_pins):
         GPIO.setup(pin, GPIO.IN, pull_up_down = GPIO.PUD_UP) # button
         
 def radio_set(station):
-    ''' Come appropriate LED on and start radio playing. '''
+    ''' Switch on the appropriate LED and start radio playing. '''
     global LED_PINS
     leds_off(LED_PINS)    
     GPIO.setmode(GPIO.BOARD)
@@ -80,6 +87,7 @@ def button_mode(butt_pins):
         for pin in butt_pins:
             if GPIO.input(pin) == False:
                 radio_set(butt_pins.index(pin)+1)
+                # to swith off radio calculate num of pressing of button #3
                 if pin == 37:
                     NUM_FOR_END +=1
                 if NUM_FOR_END >= 100:
@@ -104,11 +112,7 @@ class MyStreamer(TwythonStreamer):
                 
             elif 'b@tton' in data['text']:
                 print ('=== Control transferred from Twitter to Buttons ===')
-                for i in range(5):
-                    GPIO.output(36, True)
-                    time.sleep(0.2)
-                    GPIO.output(36, False)
-                    time.sleep(0.2)
+                blink(36)
                 button_mode(BUTT_PINS)
             
             elif 'sh@tdown' in data['text']:
@@ -143,11 +147,7 @@ if __name__ == '__main__':
                 # control buttons
                 print ('=== Button control choosed ===')
                 leds_off(LED_PINS) 
-                for i in range(5):
-                    GPIO.output(36, True)
-                    time.sleep(0.2)
-                    GPIO.output(36, False)
-                    time.sleep(0.2)
+                blink(36)           # LED #1 blinks 5 times
                 
                 button_mode(BUTT_PINS)
                 break
@@ -156,11 +156,7 @@ if __name__ == '__main__':
                 # coltrol tweets
                 print ('=== Twitter control choosed ===')
                 leds_off(LED_PINS) 
-                for i in range(5):
-                    GPIO.output(38, True)
-                    time.sleep(0.2)
-                    GPIO.output(38, False)
-                    time.sleep(0.2)
+                blink(38)           # LED #2 blinks 5 times
                 
                 stream = MyStreamer(CK, CS, AT, AS)
                 stream.statuses.filter(track = 'R@dio')
@@ -168,3 +164,4 @@ if __name__ == '__main__':
        
     except KeyboardInterrupt:
         kill_process()
+
