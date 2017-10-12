@@ -11,6 +11,7 @@ Software requirements:
            >>sudo apt-get update
            install the Music Player Daemon(mpd) and its client mpc
            >>sudo apt-get install mpc mpd
+           Get keys for Twitter Application
            
 Behavor:
   After launching, three LEDs switching on.
