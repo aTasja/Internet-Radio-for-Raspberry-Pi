@@ -3,7 +3,7 @@
 # install the Music Player Daemon(mpd) and its client mpc
 # sudo apt-get install mpc mpd
 
-# Choose three radio stations:
+# Three radio stations (lines 35, 36, 37):
 # 1. spokoynoe radio
 # mpc add https://listen1.myradio24.com/6262
 
@@ -13,14 +13,15 @@
 # 3. nashe radio
 # mpc add http://nashe1.hostingradio.ru/nashespb128.mp3
 
-# option. piter fm
+# option - piter fm
 # mpc add http://cdn.radiopiterfm.ru/piterfm
 
-
-
-# LED pin 36 == BUTTON pin 33
+# (GPIO.BOARD)
+# LED pin 36 == BUTTON pin 33 
 # LED pin 38 == BUTTON pin 35
 # LED pin 40 == BUTTON pin 37
+
+# !!! KEYS FOR TWITTER APPLICATION SHOULD BE ENTERED IN LINES 127-130 !!!
 
 
 from twython import TwythonStreamer
