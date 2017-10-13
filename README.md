@@ -8,9 +8,11 @@ Breadboard
 Wires
 
 Software requirements: 
->>sudo apt-get update 
-Install the Music Player Daemon(mpd) and its client mpc >
->sudo apt-get install mpc mpd Get keys for Twitter Application
+           >>sudo apt-get update 
+           Install the Music Player Daemon(mpd) and its client mpc 
+           >>sudo apt-get install mpc mpd Get keys for Twitter Application
+
+Also user should have Twitter Application and know their keys.
 
 Behavior: 
 After launching, three LEDs are switching on. 
