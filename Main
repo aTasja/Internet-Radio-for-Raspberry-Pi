@@ -30,14 +30,15 @@ import time
 import RPi.GPIO as GPIO
 
 def radio_playlist():
+    ''' Fill player by radio strams '''
     os.system('amixer cset numid=3 1') #switch the audio output to analogue (headphone jack)
     
     # fill Music Player Daemon playlist
-    os.system('mpc add https://listen1.myradio24.com/6262') # radio 1
-    os.system('mpc add https://icecast-vgtrk.cdnvideo.ru/mayakfm_aac_64kbps') # radio 2
-    os.system('mpc add http://nashe1.hostingradio.ru/nashespb128.mp3') # radio 3
+    os.system('mpc add https://listen1.myradio24.com/6262')                     # radio 1
+    os.system('mpc add https://icecast-vgtrk.cdnvideo.ru/mayakfm_aac_64kbps')   # radio 2
+    os.system('mpc add http://nashe1.hostingradio.ru/nashespb128.mp3')          # radio 3
     
-    os.system('mpc volume 100') # set volume 100%
+    os.system('mpc volume 100')                                                 # set volume 100%
 
 def kill_process():
     ''' Delete all processes, clear GPIO, Music Player Daemon playlist'''
@@ -53,6 +54,7 @@ def leds_mode(pins, mode):
         GPIO.output(pin, mode)
         
 def blink(pin):
+    ''' Makes blinks of LEDs for confirmation of controlling mode choosed.'''
     global LED_PINS
     leds_mode(LED_PINS, False)
     for i in range(5):
@@ -83,7 +85,7 @@ def button_mode(butt_pins):
         for pin in butt_pins:
             if GPIO.input(pin) == False:
                 radio_set(butt_pins.index(pin)+1)
-                # to swith off radio calculate num of pressing of button #3
+                # to switch off radio calculate num of pressing of button #3
                 if pin == 37:
                     NUM_FOR_END +=1
                 if NUM_FOR_END >= 100:
@@ -93,7 +95,7 @@ def button_mode(butt_pins):
             
   
 class MyStreamer(TwythonStreamer):
-    ''' Listening for tweets. Calls radio() after appropriate tweet is catched. If 'b@tton' in tweet - change control to buttons.'''
+    ''' Listening for tweets. Calls radio() after appropriate tweet is catched. If 'b@tton' in tweet - switch control to buttons.'''
     def on_success(self, data):
         global radio_sites       
         if 'text' in data:
@@ -130,7 +132,7 @@ if __name__ == '__main__':
     AT = '-'
     AS = '-'
     
-    try:  # program starts here
+    try:                                                            # program starts here
         radio_playlist()
         leds_mode(LED_PINS, True)
         button_setup(BUTT_PINS)
@@ -142,7 +144,7 @@ if __name__ == '__main__':
             if GPIO.input(33) == False:
                 # control buttons
                 print ('=== Button control choosed ===')
-                blink(36)           # LED #1 blinks 5 times
+                blink(36)                                            # LED #1 blinks 5 times
                 
                 button_mode(BUTT_PINS)
                 break
@@ -150,7 +152,7 @@ if __name__ == '__main__':
             elif GPIO.input(35) == False:               
                 # coltrol tweets
                 print ('=== Twitter control choosed ===')
-                blink(38)           # LED #2 blinks 5 times
+                blink(38)                                             # LED #2 blinks 5 times
                 
                 stream = MyStreamer(CK, CS, AT, AS)
                 stream.statuses.filter(track = 'R@dio')
