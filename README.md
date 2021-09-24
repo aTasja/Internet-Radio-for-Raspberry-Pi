@@ -3,12 +3,12 @@
 Presentation https://www.youtube.com/watch?v=QcSLtvohZh8
 
 Equipment: 	Raspberry Pi 3 </br>
-                      Speaker https://www.compareit.com/product/4538003 
-                      3 LEDs 
-                      3 Resistors 1KOhm 
-                      3 Buttons 
-                      Breadboard 
-                      Wires
+                      Speaker https://www.compareit.com/product/4538003 </br>
+                      3 LEDs </br>
+                      3 Resistors 1KOhm </br>
+                      3 Buttons </br>
+                      Breadboard </br>
+                      Wires </br>
 
 Software requirements: 
            >>sudo apt-get update 
