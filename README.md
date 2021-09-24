@@ -1,4 +1,7 @@
 # Internet-Radio-for-Raspberry-Pi
+
+Presentation https://www.youtube.com/watch?v=QcSLtvohZh8
+
 Equipment: 	Raspberry Pi 3 
 Speaker https://www.compareit.com/product/4538003 
 3 LEDs 
