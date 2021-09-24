@@ -11,9 +11,9 @@ Equipment: 	Raspberry Pi 3 </br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wires </br>
 
 Software requirements: 
-           >>sudo apt-get update 
-           Install the Music Player Daemon(mpd) and its client mpc 
-           >>sudo apt-get install mpc mpd Get keys for Twitter Application
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>>sudo apt-get update 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Install the Music Player Daemon(mpd) and its client mpc 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>>sudo apt-get install mpc mpd Get keys for Twitter Application
 
 Also user should have Twitter Application and know their keys.
 
